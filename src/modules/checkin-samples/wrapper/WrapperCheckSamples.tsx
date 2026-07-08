@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { methodsNamesList } from "../../../utils/libs/lib";
+import { collectedMethodsResults } from "../../../utils/detectionMethods/dectectionMethods";
 
 type TypeFormValues = {
   selectedSample: string;
@@ -78,21 +79,11 @@ export const WrapperCheckSamples = () => {
     retry: false,
   });
 
-  function collectedMethodsResults(formValues: TypeFormValues) {
-    const methodResults = formValues.selectedMethods.map((selectedMethod) => {
-      const foundMethod = methodsNamesList.find(
-        (method) => method.value === selectedMethod,
-      );
-      return {
-        value: foundMethod?.method(dataSample.cells) ?? false,
-        method: selectedMethod,
-      };
-    });
-    return methodResults;
-  }
-
   const handleOnSubmit = (formValues: TypeFormValues) => {
-    const results = collectedMethodsResults(formValues);
+    const results = collectedMethodsResults(
+      formValues.selectedMethods,
+      dataSample.cells,
+    );
     setUseMethodsResults(results);
   };
 

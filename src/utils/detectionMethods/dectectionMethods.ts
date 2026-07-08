@@ -1,5 +1,6 @@
 import { checkIfNumber } from "../helpers/helpers";
 import { cellsMethosPercentages } from "../libs/percentages";
+import { methodsNamesList } from "../libs/lib";
 
 function validateSample(sample: number[], minLength: number): boolean {
   if (!sample || sample.length < minLength) return false;
@@ -52,4 +53,19 @@ export function surroundedOnesByZeroesMethod(sample: number[]): boolean {
     surroundedOnes >
     sampleLength * cellsMethosPercentages.surroundedOnesByZeroes
   );
+}
+
+export function collectedMethodsResults(
+  selectedMethods: string[],
+  cells: number[],
+): { value: boolean; method: string }[] {
+  return selectedMethods.map((selectedMethod) => {
+    const foundMethod = methodsNamesList.find(
+      (method) => method.value === selectedMethod,
+    );
+    return {
+      value: foundMethod?.method(cells) ?? false,
+      method: selectedMethod,
+    };
+  });
 }

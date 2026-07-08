@@ -2,7 +2,7 @@ import {
   contiguousOnesMethod,
   evenZeroesMethod,
   surroundedOnesByZeroesMethod,
-} from "../detectionMethods";
+} from "../detectionMethods/dectectionMethods";
 
 export const methodsNamesList = [
   {

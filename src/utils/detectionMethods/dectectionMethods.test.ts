@@ -4,7 +4,8 @@ import {
   evenZeroesMethod,
   contiguousOnesMethod,
   surroundedOnesByZeroesMethod,
-} from ".";
+  collectedMethodsResults,
+} from "./dectectionMethods";
 import {
   contiguousOnesMethodFalse,
   contiguousOnesMethodTrue,
