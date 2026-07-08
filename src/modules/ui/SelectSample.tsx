@@ -7,7 +7,7 @@ interface IPropsSelectComp {
   selectedSample: string | null;
 }
 
-export const SelectComp = ({
+export const SelectSample = ({
   optionsToDisplay,
   onChange,
   selectedSample,
