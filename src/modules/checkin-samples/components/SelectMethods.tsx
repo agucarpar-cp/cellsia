@@ -16,7 +16,7 @@ export const SelectMethods = ({
       onChange={(e) => onChange(e.target.value as string[])}
       value={selectedMethods || []}
       multiple
-      renderValue={(selected) =>
+      renderValue={(selectedMethods) =>
         selectedMethods
           ?.map(
             (method) => methodsNamesList.find((m) => m.value === method)?.label,
