@@ -14,3 +14,17 @@ export function evenZeroesMethod(sample: number[]): boolean {
 
   return result;
 }
+
+export function contiguousOnes(sample: number[]): boolean {
+  if (!sample || sample.length === 0) return false;
+  let countContiguousOnes = 0;
+  for (let i = 0; i < sample.length - 1; i++) {
+    if (sample[i] === 1 && sample[i + 1] === 1) {
+      countContiguousOnes++;
+    }
+  }
+
+  const percentageRequired = 0.2;
+
+  return countContiguousOnes > Math.max(sample.length * percentageRequired);
+}
