@@ -1,27 +1,38 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { Controller, type Control } from "react-hook-form";
 
 interface IPropsSelectSample {
   optionsToDisplay: string[] | undefined;
-  onChange: (value: string) => void;
-  selectedSample: string | null;
+  control: Control<TypeFormValues>;
 }
 
+type TypeFormValues = {
+  selectedSample: string;
+  selectedMethods: string[];
+};
+
 export const SelectSample = ({
+  control,
   optionsToDisplay,
-  onChange,
-  selectedSample,
 }: IPropsSelectSample) => {
   return (
-    <Select
-      onChange={(e) => onChange(e.target.value as string)}
-      value={selectedSample || ""}
-    >
-      {optionsToDisplay?.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </Select>
+    <Controller
+      name="selectedSample"
+      control={control}
+      render={({ field }) => (
+        <Select
+          {...field}
+          onChange={(e) => field.onChange(e.target.value as string)}
+          value={field.value || ""}
+        >
+          {optionsToDisplay?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+    />
   );
 };

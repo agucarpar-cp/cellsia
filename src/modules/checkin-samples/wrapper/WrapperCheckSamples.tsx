@@ -5,15 +5,45 @@ import {
 } from "../../../services/cellMethods";
 
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
 import { CheckinSampleDisplayData } from "../components/CheckinSampleDisplayData";
 import { SelectMethods } from "../components/SelectMethods";
 import { SelectSample } from "../../ui/SelectSample";
 import { WrapperDisplayResults } from "./WrapperDisplayResults";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+
+type TypeFormValues = {
+  selectedSample: string;
+  selectedMethods: string[];
+};
 
 export const WrapperCheckSamples = () => {
-  const [selectedSample, setSelectedSample] = useState<string | null>(null);
-  const [selectedMethods, setSelectedMethods] = useState<string[] | null>(null);
+  const formSchema = yup.object({
+    selectedSample: yup.string().required("Sample is required"),
+    selectedMethods: yup
+      .array()
+      .of(yup.string().required())
+      .required("Methods are required"),
+  });
+  const formMethods = useForm<TypeFormValues>({
+    mode: "all",
+    resolver: yupResolver(formSchema),
+    defaultValues: {
+      selectedSample: "",
+      selectedMethods: [],
+    },
+  });
+
+  const {
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = formMethods;
+
+  const selectedSample = watch("selectedSample");
 
   const {
     data: dataSample,
@@ -37,13 +67,17 @@ export const WrapperCheckSamples = () => {
     queryFn: dummyGetAllCellSamples,
   });
 
-  const handleSelectSample = (sampleName: string) => {
-    setSelectedSample(sampleName);
-  };
+  // const handleSelectSample = (sampleName: string) => {
+  //   setSelectedSample(sampleName);
+  // };
 
-  const handleSelectMethod = (methodName: string[]) => {
-    setSelectedMethods(methodName);
-    console.log(`Selected method: ${methodName}`);
+  // const handleSelectMethod = (methodName: string[]) => {
+  //   setSelectedMethods(methodName);
+  //   console.log(`Selected method: ${methodName}`);
+  // };
+
+  const handleOnSubtmit = (formValues: TypeFormValues) => {
+    console.log(formValues);
   };
 
   if (isAllSamplesLoading || availableSamplesLoading)
@@ -64,26 +98,21 @@ export const WrapperCheckSamples = () => {
     <section id="wrapper-check-samples">
       <Stack spacing={3}>
         <h2>Muestras disponibles</h2>
-        <SelectSample
-          optionsToDisplay={availableSamples}
-          onChange={handleSelectSample}
-          selectedSample={selectedSample}
-        />
-        {dataSample && (
-          <Stack spacing={3}>
-            <CheckinSampleDisplayData dataSample={dataSample.cells} />
-            <SelectMethods
-              onChange={handleSelectMethod}
-              selectedMethods={selectedMethods}
-            />
-            {selectedMethods && selectedMethods.length > 0 && (
+        <form onSubmit={handleSubmit(handleOnSubtmit)}>
+          <SelectSample control={control} optionsToDisplay={availableSamples} />
+          {dataSample && (
+            <Stack spacing={3}>
+              <CheckinSampleDisplayData dataSample={dataSample.cells} />
+              <SelectMethods control={control} />
               <Stack spacing={3}>
                 <h3>Resultados de los métodos seleccionados:</h3>
-                <WrapperDisplayResults selectedMethods={selectedMethods} />
+                {/* <WrapperDisplayResults selectedMethods={selectedMethods} /> */}
               </Stack>
-            )}
-          </Stack>
-        )}
+            </Stack>
+          )}
+
+          <Button type="submit">Submit</Button>
+        </form>
       </Stack>
     </section>
   );

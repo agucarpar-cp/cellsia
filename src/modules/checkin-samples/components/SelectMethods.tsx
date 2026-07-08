@@ -1,34 +1,43 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { methodsNamesList } from "../../../utils/libs/lib";
+import { Controller, type Control } from "react-hook-form";
 
-interface IPropsSelectMethod {
-  onChange: (value: string[]) => void;
-  selectedMethods: string[] | null;
+interface IPropsSelectMethods {
+  control: Control<TypeFormValues>;
 }
 
-export const SelectMethods = ({
-  onChange,
-  selectedMethods,
-}: IPropsSelectMethod) => {
+type TypeFormValues = {
+  selectedSample: string;
+  selectedMethods: string[];
+};
+
+export const SelectMethods = ({ control }: IPropsSelectMethods) => {
   return (
-    <Select
-      onChange={(e) => onChange(e.target.value as string[])}
-      value={selectedMethods || []}
-      multiple
-      renderValue={(selectedMethods) =>
-        selectedMethods
-          ?.map(
-            (method) => methodsNamesList.find((m) => m.value === method)?.label,
-          )
-          .join(", ")
-      }
-    >
-      {methodsNamesList.map((method) => (
-        <MenuItem key={method.value} value={method.value}>
-          {method.label}
-        </MenuItem>
-      ))}
-    </Select>
+    <Controller
+      name="selectedMethods"
+      control={control}
+      render={({ field }) => (
+        <Select
+          {...field}
+          onChange={(e) => field.onChange(e.target.value as string[])}
+          multiple
+          renderValue={(selected: string[]) =>
+            selected
+              ?.map(
+                (method) =>
+                  methodsNamesList.find((m) => m.value === method)?.label,
+              )
+              .join(", ")
+          }
+        >
+          {methodsNamesList.map((method) => (
+            <MenuItem key={method.value} value={method.value}>
+              {method.label}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+    />
   );
 };
