@@ -9,15 +9,14 @@ import { useState } from "react";
 import { CheckinSampleDisplayData } from "../components/CheckinSampleDisplayData";
 import { SelectMethods } from "../components/SelectMethods";
 import { SelectSample } from "../../ui/SelectSample";
-import { methodsNamesListArray } from "../../../utils/libs/lib";
+import { WrapperDisplayResults } from "./WrapperDisplayResults";
+import type { MethodName } from "../../../utils/libs/lib";
 
 export const WrapperCheckSamples = () => {
   const [selectedSample, setSelectedSample] = useState<string | null>(null);
-  const [selectedMethods, setSelectedMethods] = useState<string[] | null>(null);
-  const handleSelectMethod = (methodName: string[]) => {
-    setSelectedMethods(methodName as string[]);
-    console.log(`Selected method: ${methodName}`);
-  };
+  const [selectedMethods, setSelectedMethods] = useState<MethodName[] | null>(
+    null,
+  );
 
   const {
     data: dataSample,
@@ -43,6 +42,11 @@ export const WrapperCheckSamples = () => {
 
   const handleSelectSample = (sampleName: string) => {
     setSelectedSample(sampleName);
+  };
+
+  const handleSelectMethod = (methodName: MethodName[]) => {
+    setSelectedMethods(methodName);
+    console.log(`Selected method: ${methodName}`);
   };
 
   if (isAllSamplesLoading || availableSamplesLoading)
@@ -72,10 +76,15 @@ export const WrapperCheckSamples = () => {
           <Stack spacing={3}>
             <CheckinSampleDisplayData dataSample={dataSample.cells} />
             <SelectMethods
-              optionsToDisplay={methodsNamesListArray}
               onChange={handleSelectMethod}
               selectedMethods={selectedMethods}
             />
+            {selectedMethods && selectedMethods.length > 0 && (
+              <Stack spacing={3}>
+                <h3>Resultados de los métodos seleccionados:</h3>
+                <WrapperDisplayResults selectedMethods={selectedMethods} />
+              </Stack>
+            )}
           </Stack>
         )}
       </Stack>

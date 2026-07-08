@@ -12,17 +12,25 @@ export const cellsMethosPercentages: TypeCellsMethosPercentages = {
 } as const;
 
 export const methodsNamesList = {
-  evenZeroesMethod: { label: "Even Zeroes Method", method: evenZeroesMethod },
+  evenZeroesMethod: {
+    label: "Even Zeroes Method",
+    value: "evenZeroesMethod",
+    method: evenZeroesMethod,
+  },
   contiguousOnesMethod: {
     label: "Contiguous Ones Method",
+    value: "contiguousOnesMethod",
     method: contiguousOnesMethod,
   },
   surroundedOnesByZeroes: {
     label: "Surrounded Ones By Zeroes Method",
+    value: "surroundedOnesByZeroes",
     method: surroundedOnesByZeroesMethod,
   },
 } as const;
 
-export const methodsNamesListArray = Object.values(methodsNamesList).map(
-  (method) => method.label,
-);
+export type MethodName = keyof typeof methodsNamesList;
+
+export const methodsNamesListArray = Object.keys(
+  methodsNamesList,
+) as MethodName[];
