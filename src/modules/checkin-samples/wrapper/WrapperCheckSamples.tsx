@@ -40,6 +40,7 @@ export const WrapperCheckSamples = () => {
 
   if (isAllSamplesLoading || availableSamplesLoading)
     return <div>Loading...</div>;
+
   if (availableSamplesError || allSamplesError)
     return (
       <div>

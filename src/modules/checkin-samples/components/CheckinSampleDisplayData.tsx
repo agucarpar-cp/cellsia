@@ -10,7 +10,7 @@ export const CheckinSampleDisplayData = ({
   return (
     <Stack>
       <Typography variant="h6">This is the selected sample:</Typography>
-      <Typography>{dataSample?.join(", ")}</Typography>
+      <Typography>[{dataSample?.join(", ")}]</Typography>
     </Stack>
   );
 };
