@@ -1,5 +1,5 @@
 import { checkIfNumber } from "../helpers/helpers";
-import { cellsMethosPercentages } from "../libs/lib";
+import { cellsMethosPercentages } from "../libs/percentages";
 
 function validateSample(sample: number[], minLength: number): boolean {
   if (!sample || sample.length < minLength) return false;

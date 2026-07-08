@@ -1,14 +1,10 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import {
-  methodsNamesList,
-  methodsNamesListArray,
-  type MethodName,
-} from "../../../utils/libs/lib";
+import { methodsNamesList } from "../../../utils/libs/lib";
 
 interface IPropsSelectMethod {
-  onChange: (value: MethodName[]) => void;
-  selectedMethods: MethodName[] | null;
+  onChange: (value: string[]) => void;
+  selectedMethods: string[] | null;
 }
 
 export const SelectMethods = ({
@@ -17,18 +13,20 @@ export const SelectMethods = ({
 }: IPropsSelectMethod) => {
   return (
     <Select
-      onChange={(e) => onChange(e.target.value as MethodName[])}
+      onChange={(e) => onChange(e.target.value as string[])}
       value={selectedMethods || []}
       multiple
-      renderValue={(selectedMethods) =>
+      renderValue={(selected) =>
         selectedMethods
-          ?.map((method) => methodsNamesList[method].label)
+          ?.map(
+            (method) => methodsNamesList.find((m) => m.value === method)?.label,
+          )
           .join(", ")
       }
     >
-      {methodsNamesListArray.map((methodKey) => (
-        <MenuItem key={methodKey} value={methodKey}>
-          {methodsNamesList[methodKey].label}
+      {methodsNamesList.map((method) => (
+        <MenuItem key={method.value} value={method.value}>
+          {method.label}
         </MenuItem>
       ))}
     </Select>

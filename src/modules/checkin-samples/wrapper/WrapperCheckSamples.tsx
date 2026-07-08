@@ -10,13 +10,10 @@ import { CheckinSampleDisplayData } from "../components/CheckinSampleDisplayData
 import { SelectMethods } from "../components/SelectMethods";
 import { SelectSample } from "../../ui/SelectSample";
 import { WrapperDisplayResults } from "./WrapperDisplayResults";
-import type { MethodName } from "../../../utils/libs/lib";
 
 export const WrapperCheckSamples = () => {
   const [selectedSample, setSelectedSample] = useState<string | null>(null);
-  const [selectedMethods, setSelectedMethods] = useState<MethodName[] | null>(
-    null,
-  );
+  const [selectedMethods, setSelectedMethods] = useState<string[] | null>(null);
 
   const {
     data: dataSample,
@@ -44,7 +41,7 @@ export const WrapperCheckSamples = () => {
     setSelectedSample(sampleName);
   };
 
-  const handleSelectMethod = (methodName: MethodName[]) => {
+  const handleSelectMethod = (methodName: string[]) => {
     setSelectedMethods(methodName);
     console.log(`Selected method: ${methodName}`);
   };
