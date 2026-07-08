@@ -1,22 +1,24 @@
-import { useState } from "react";
-import { methodsNamesListArray } from "../../../utils/libs/lib";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
-export const SelectMethods = () => {
-  const [selectedMethod, setSelectedMethod] = useState<string[] | null>(null);
-  const handleSelectMethod = (methodName: string[]) => {
-    setSelectedMethod(methodName as string[]);
-    console.log(`Selected method: ${methodName}`);
-  };
+interface IPropsSelectMethod {
+  optionsToDisplay: string[] | undefined;
+  onChange: (value: string[]) => void;
+  selectedMethods: string[] | null;
+}
 
+export const SelectMethods = ({
+  optionsToDisplay,
+  onChange,
+  selectedMethods,
+}: IPropsSelectMethod) => {
   return (
     <Select
-      onChange={(e) => handleSelectMethod(e.target.value as string[])}
-      value={selectedMethod || []}
+      onChange={(e) => onChange(e.target.value as string[])}
+      value={selectedMethods || []}
       multiple
     >
-      {methodsNamesListArray.map((option) => (
+      {optionsToDisplay?.map((option) => (
         <MenuItem key={option} value={option}>
           {option}
         </MenuItem>

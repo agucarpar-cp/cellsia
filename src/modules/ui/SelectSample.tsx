@@ -1,7 +1,7 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
-interface IPropsSelectComp {
+interface IPropsSelectSample {
   optionsToDisplay: string[] | undefined;
   onChange: (value: string) => void;
   selectedSample: string | null;
@@ -11,7 +11,7 @@ export const SelectSample = ({
   optionsToDisplay,
   onChange,
   selectedSample,
-}: IPropsSelectComp) => {
+}: IPropsSelectSample) => {
   return (
     <Select
       onChange={(e) => onChange(e.target.value as string)}

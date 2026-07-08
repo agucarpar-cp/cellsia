@@ -9,9 +9,15 @@ import { useState } from "react";
 import { CheckinSampleDisplayData } from "../components/CheckinSampleDisplayData";
 import { SelectMethods } from "../components/SelectMethods";
 import { SelectSample } from "../../ui/SelectSample";
+import { methodsNamesListArray } from "../../../utils/libs/lib";
 
 export const WrapperCheckSamples = () => {
   const [selectedSample, setSelectedSample] = useState<string | null>(null);
+  const [selectedMethods, setSelectedMethods] = useState<string[] | null>(null);
+  const handleSelectMethod = (methodName: string[]) => {
+    setSelectedMethods(methodName as string[]);
+    console.log(`Selected method: ${methodName}`);
+  };
 
   const {
     data: dataSample,
@@ -55,7 +61,7 @@ export const WrapperCheckSamples = () => {
 
   return (
     <section id="wrapper-check-samples">
-      <Stack>
+      <Stack spacing={3}>
         <h2>Muestras disponibles</h2>
         <SelectSample
           optionsToDisplay={availableSamples}
@@ -63,10 +69,14 @@ export const WrapperCheckSamples = () => {
           selectedSample={selectedSample}
         />
         {dataSample && (
-          <>
+          <Stack spacing={3}>
             <CheckinSampleDisplayData dataSample={dataSample.cells} />
-            <SelectMethods />
-          </>
+            <SelectMethods
+              optionsToDisplay={methodsNamesListArray}
+              onChange={handleSelectMethod}
+              selectedMethods={selectedMethods}
+            />
+          </Stack>
         )}
       </Stack>
     </section>
