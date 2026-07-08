@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { dummyGetAllCellMethods } from "../../../services/cellMethods";
 
 import Stack from "@mui/material/Stack";
-import { SelectComp } from "../../ui/Select";
+import { SelectComp } from "../../ui/SelectComp";
 
 export const WrapperCheckSamples = () => {
   const {
