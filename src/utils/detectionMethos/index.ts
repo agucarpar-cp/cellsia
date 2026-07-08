@@ -1,5 +1,5 @@
 import { checkIfNumber } from "../helpers/helpers";
-import { cellsMethosPercentage } from "../libs/lib";
+import { cellsMethosPercentages } from "../libs/lib";
 
 function validateSample(sample: number[], minLength: number): boolean {
   if (!sample || sample.length < minLength) return false;
@@ -17,7 +17,7 @@ export function evenZeroesMethod(sample: number[]): boolean {
 
   const positiveCells = sample.filter(isPositiveCell).length;
 
-  return positiveCells > sampleLength * cellsMethosPercentage.evenZeroesMethod;
+  return positiveCells > sampleLength * cellsMethosPercentages.evenZeroesMethod;
 }
 
 export function contiguousOnesMethod(sample: number[]): boolean {
@@ -32,7 +32,7 @@ export function contiguousOnesMethod(sample: number[]): boolean {
 
   return (
     countContiguousOnes >
-    sampleLength * cellsMethosPercentage.contiguousOnesMethod
+    sampleLength * cellsMethosPercentages.contiguousOnesMethod
   );
 }
 
@@ -49,6 +49,7 @@ export function surroundedOnesByZeroesMethod(sample: number[]): boolean {
   }
 
   return (
-    surroundedOnes > sampleLength * cellsMethosPercentage.surroundedOnesByZeroes
+    surroundedOnes >
+    sampleLength * cellsMethosPercentages.surroundedOnesByZeroes
   );
 }
