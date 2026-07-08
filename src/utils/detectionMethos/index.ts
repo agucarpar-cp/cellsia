@@ -21,7 +21,7 @@ export function evenZeroesMethod(sample: number[]): boolean {
 }
 
 export function contiguousOnesMethod(sample: number[]): boolean {
-  if (!validateSample(sample, 2)) return false;
+  if (!validateSample(sample, 1)) return false;
   const sampleLength = sample.length;
   let countContiguousOnes = 0;
   for (let i = 0; i < sampleLength - 1; i++) {
@@ -37,7 +37,7 @@ export function contiguousOnesMethod(sample: number[]): boolean {
 }
 
 export function surroundedOnesByZeroesMethod(sample: number[]): boolean {
-  if (!validateSample(sample, 3)) return false;
+  if (!validateSample(sample, 2)) return false;
 
   const sampleLength = sample.length;
 
