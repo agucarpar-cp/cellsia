@@ -67,16 +67,7 @@ export const WrapperCheckSamples = () => {
     queryFn: dummyGetAllCellSamples,
   });
 
-  // const handleSelectSample = (sampleName: string) => {
-  //   setSelectedSample(sampleName);
-  // };
-
-  // const handleSelectMethod = (methodName: string[]) => {
-  //   setSelectedMethods(methodName);
-  //   console.log(`Selected method: ${methodName}`);
-  // };
-
-  const handleOnSubtmit = (formValues: TypeFormValues) => {
+  const handleOnSubmit = (formValues: TypeFormValues) => {
     console.log(formValues);
   };
 
@@ -98,7 +89,7 @@ export const WrapperCheckSamples = () => {
     <section id="wrapper-check-samples">
       <Stack spacing={3}>
         <h2>Muestras disponibles</h2>
-        <form onSubmit={handleSubmit(handleOnSubtmit)}>
+        <form onSubmit={handleSubmit(handleOnSubmit)}>
           <SelectSample control={control} optionsToDisplay={availableSamples} />
           {dataSample && (
             <Stack spacing={3}>
