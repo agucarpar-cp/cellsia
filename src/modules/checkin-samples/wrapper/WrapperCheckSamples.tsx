@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import {
   dummyGetAllCellSamples,
   getOneCellSample,
@@ -21,6 +22,10 @@ type TypeFormValues = {
 };
 
 export const WrapperCheckSamples = () => {
+  const [useMethodsResults, setUseMethodsResults] = useState<
+    { value: boolean; method: string }[]
+  >([]);
+
   const formSchema = yup.object({
     selectedSample: yup.string().required("Sample is required"),
     selectedMethods: yup
@@ -55,6 +60,8 @@ export const WrapperCheckSamples = () => {
     queryKey: ["getOneCellSample", selectedSample],
     queryFn: () => getOneCellSample(selectedSample!),
     enabled: !!selectedSample,
+    gcTime: Infinity,
+    staleTime: Infinity,
     retry: false,
   });
 
@@ -66,16 +73,27 @@ export const WrapperCheckSamples = () => {
   } = useQuery({
     queryKey: ["availableSamples"],
     queryFn: dummyGetAllCellSamples,
+    gcTime: Infinity,
+    staleTime: Infinity,
+    retry: false,
   });
 
-  const handleOnSubmit = (formValues: TypeFormValues) => {
+  function collectedMethodsResults(formValues: TypeFormValues) {
     const methodResults = formValues.selectedMethods.map((selectedMethod) => {
-      return methodsNamesList
-        .find((method) => method.value === selectedMethod)
-        ?.method(dataSample.cells || []);
+      const foundMethod = methodsNamesList.find(
+        (method) => method.value === selectedMethod,
+      );
+      return {
+        value: foundMethod?.method(dataSample.cells) ?? false,
+        method: selectedMethod,
+      };
     });
-
     return methodResults;
+  }
+
+  const handleOnSubmit = (formValues: TypeFormValues) => {
+    const results = collectedMethodsResults(formValues);
+    setUseMethodsResults(results);
   };
 
   if (isAllSamplesLoading || availableSamplesLoading)
@@ -104,7 +122,7 @@ export const WrapperCheckSamples = () => {
               <SelectMethods control={control} />
               <Stack spacing={3}>
                 <h3>Resultados de los métodos seleccionados:</h3>
-                {/* <WrapperDisplayResults selectedMethods={selectedMethods} /> */}
+                <WrapperDisplayResults resultsMethods={useMethodsResults} />
               </Stack>
             </Stack>
           )}
