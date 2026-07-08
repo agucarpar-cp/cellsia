@@ -1,6 +1,14 @@
+import { checkIfNumber } from "../helpers/helpers";
+import { cellsMethosPercentage } from "../libs/lib";
+
+function validateSample(sample: number[], minLength: number): boolean {
+  if (!sample || sample.length < minLength) return false;
+  return sample.every(checkIfNumber);
+}
+
 export function evenZeroesMethod(sample: number[]): boolean {
+  if (!validateSample(sample, 1)) return false;
   const sampleLength = sample.length;
-  if (!sample || sampleLength === 0 || sampleLength < 2) return false;
 
   const isEvenIndex = (index: number) => index % 2 === 0;
   const isZero = (value: number) => value === 0;
@@ -8,15 +16,13 @@ export function evenZeroesMethod(sample: number[]): boolean {
     isEvenIndex(index) && isZero(value);
 
   const positiveCells = sample.filter(isPositiveCell).length;
-  const percentageRequired = 0.3;
 
-  return positiveCells > sampleLength * percentageRequired;
+  return positiveCells > sampleLength * cellsMethosPercentage.evenZeroesMethod;
 }
 
 export function contiguousOnesMethod(sample: number[]): boolean {
+  if (!validateSample(sample, 2)) return false;
   const sampleLength = sample.length;
-
-  if (!sample || sampleLength === 0 || sampleLength < 2) return false;
   let countContiguousOnes = 0;
   for (let i = 0; i < sampleLength - 1; i++) {
     if (sample[i] === 1 && sample[i + 1] === 1) {
@@ -24,15 +30,17 @@ export function contiguousOnesMethod(sample: number[]): boolean {
     }
   }
 
-  const percentageRequired = 0.2;
-
-  return countContiguousOnes > sampleLength * percentageRequired;
+  return (
+    countContiguousOnes >
+    sampleLength * cellsMethosPercentage.contiguousOnesMethod
+  );
 }
 
-export function surroundedOnesByZeroes(sample: number[]): boolean {
+export function surroundedOnesByZeroesMethod(sample: number[]): boolean {
+  if (!validateSample(sample, 3)) return false;
+
   const sampleLength = sample.length;
 
-  if (!sample || sampleLength === 0 || sampleLength < 3) return false;
   let surroundedOnes = 0;
   for (let i = 1; i < sampleLength - 1; i++) {
     if (sample[i - 1] === 0 && sample[i] === 1 && sample[i + 1] === 0) {
@@ -40,7 +48,7 @@ export function surroundedOnesByZeroes(sample: number[]): boolean {
     }
   }
 
-  const percentageRequired = 0.1;
-
-  return surroundedOnes > sampleLength * percentageRequired;
+  return (
+    surroundedOnes > sampleLength * cellsMethosPercentage.surroundedOnesByZeroes
+  );
 }
