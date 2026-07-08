@@ -7,6 +7,7 @@ import {
 import Stack from "@mui/material/Stack";
 import { SelectComp } from "../../ui/SelectComp";
 import { useState } from "react";
+import { CheckinSampleDisplayData } from "../components/CheckinSampleDisplayData";
 
 export const WrapperCheckSamples = () => {
   const [selectedSample, setSelectedSample] = useState<string | null>(null);
@@ -59,6 +60,9 @@ export const WrapperCheckSamples = () => {
           onChange={handleSelectSample}
           selectedSample={selectedSample}
         />
+        {dataSample && (
+          <CheckinSampleDisplayData dataSample={dataSample.cells} />
+        )}
       </Stack>
     </section>
   );
