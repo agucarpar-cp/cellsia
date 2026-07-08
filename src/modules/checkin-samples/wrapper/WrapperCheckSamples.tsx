@@ -1,30 +1,64 @@
 import { useQuery } from "@tanstack/react-query";
-import { dummyGetAllCellMethods } from "../../../services/cellMethods";
+import {
+  dummyGetAllCellSamples,
+  getOneCellSample,
+} from "../../../services/cellMethods";
 
 import Stack from "@mui/material/Stack";
 import { SelectComp } from "../../ui/SelectComp";
+import { useState } from "react";
 
 export const WrapperCheckSamples = () => {
+  const [selectedSample, setSelectedSample] = useState<string | null>(null);
+
   const {
-    data: availableSamples,
+    data: dataSample,
     isLoading: availableSamplesLoading,
     isError: availableSamplesError,
     error: availableSamplesErrorMessage,
   } = useQuery({
-    queryKey: ["availableSamples"],
-    queryFn: dummyGetAllCellMethods,
+    queryKey: ["getOneCellSample", selectedSample],
+    queryFn: () => getOneCellSample(selectedSample!),
+    enabled: !!selectedSample,
+    retry: false,
   });
 
-  if (availableSamplesLoading)
-    return <div>Cargando muestras disponibles...</div>;
-  if (availableSamplesError)
-    return <div>Error: {(availableSamplesErrorMessage as Error).message}</div>;
+  const {
+    data: availableSamples,
+    isLoading: isAllSamplesLoading,
+    isError: allSamplesError,
+    error: allSamplesErrorMessage,
+  } = useQuery({
+    queryKey: ["availableSamples"],
+    queryFn: dummyGetAllCellSamples,
+  });
+
+  const handleSelectSample = (sampleName: string) => {
+    setSelectedSample(sampleName);
+  };
+
+  if (isAllSamplesLoading || availableSamplesLoading)
+    return <div>Loading...</div>;
+  if (availableSamplesError || allSamplesError)
+    return (
+      <div>
+        Error:{" "}
+        {
+          (availableSamplesErrorMessage || (allSamplesErrorMessage as Error))
+            .message
+        }
+      </div>
+    );
 
   return (
     <section id="wrapper-check-samples">
       <Stack>
         <h2>Muestras disponibles</h2>
-        <SelectComp optionsToDisplay={availableSamples} />
+        <SelectComp
+          optionsToDisplay={availableSamples}
+          onChange={handleSelectSample}
+          selectedSample={selectedSample}
+        />
       </Stack>
     </section>
   );

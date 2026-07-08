@@ -2,14 +2,25 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 interface IPropsSelectComp {
-  optionsToDisplay?: string[];
+  optionsToDisplay: string[] | undefined;
+  onChange: (value: string) => void;
+  selectedSample: string | null;
 }
 
-export const SelectComp = ({ optionsToDisplay }: IPropsSelectComp) => {
+export const SelectComp = ({
+  optionsToDisplay,
+  onChange,
+  selectedSample,
+}: IPropsSelectComp) => {
   return (
-    <Select>
+    <Select
+      onChange={(e) => onChange(e.target.value as string)}
+      value={selectedSample || ""}
+    >
       {optionsToDisplay?.map((option) => (
-        <MenuItem key={option}>{option}</MenuItem>
+        <MenuItem key={option} value={option}>
+          {option}
+        </MenuItem>
       ))}
     </Select>
   );
