@@ -69,16 +69,12 @@ export const WrapperCheckSamples = () => {
   });
 
   const handleOnSubmit = (formValues: TypeFormValues) => {
-    console.log(formValues);
-    console.log("dataSample", dataSample);
-
     const methodResults = formValues.selectedMethods.map((selectedMethod) => {
       return methodsNamesList
         .find((method) => method.value === selectedMethod)
         ?.method(dataSample.cells || []);
     });
 
-    console.log("methodResults", methodResults);
     return methodResults;
   };
 
