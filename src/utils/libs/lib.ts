@@ -12,13 +12,13 @@ export const cellsMethosPercentages: TypeCellsMethosPercentages = {
 } as const;
 
 export const methodsNamesList = {
-  evenZeroesMethod: { label: "evenZeroesMethod", method: evenZeroesMethod },
+  evenZeroesMethod: { label: "Even Zeroes Method", method: evenZeroesMethod },
   contiguousOnesMethod: {
-    label: "contiguousOnesMethod",
+    label: "Contiguous Ones Method",
     method: contiguousOnesMethod,
   },
   surroundedOnesByZeroes: {
-    label: "surroundedOnesByZeroesMethod",
+    label: "Surrounded Ones By Zeroes Method",
     method: surroundedOnesByZeroesMethod,
   },
 } as const;
