@@ -3,3 +3,6 @@ export const evenZeroesMethodFalse = [0, 1, 2, 3, 4, 5, 6];
 
 export const contiguousOnesMethodTrue = [1, 1, 0, 1, 1, 1, 0, 0, 1];
 export const contiguousOnesMethodFalse = [1, 0, 1, 0, 1, 0, 1, 0, 1];
+
+export const surroundedOnesByZeroesMethodTrue = [0, 1, 0, 1, 0, 1, 0, 1, 0];
+export const surroundedOnesByZeroesMethodFalse = [1, 0, 1, 0, 1, 0, 1, 0, 1];

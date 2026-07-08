@@ -15,7 +15,7 @@ export function evenZeroesMethod(sample: number[]): boolean {
   return result;
 }
 
-export function contiguousOnes(sample: number[]): boolean {
+export function contiguousOnesMethod(sample: number[]): boolean {
   if (!sample || sample.length === 0) return false;
   let countContiguousOnes = 0;
   for (let i = 0; i < sample.length - 1; i++) {
@@ -26,5 +26,19 @@ export function contiguousOnes(sample: number[]): boolean {
 
   const percentageRequired = 0.2;
 
-  return countContiguousOnes > Math.max(sample.length * percentageRequired);
+  return countContiguousOnes > sample.length * percentageRequired;
+}
+
+export function surroundedOnesByZeroes(sample: number[]): boolean {
+  if (!sample || sample.length === 0) return false;
+  let surroundedOnes = 0;
+  for (let i = 1; i < sample.length - 1; i++) {
+    if (sample[i] === 1 && sample[i + 1] === 0 && sample[i - 1] === 0) {
+      surroundedOnes++;
+    }
+  }
+
+  const percentageRequired = 0.1;
+
+  return surroundedOnes > sample.length * percentageRequired;
 }

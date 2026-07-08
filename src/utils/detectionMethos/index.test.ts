@@ -1,11 +1,17 @@
 /// <reference types="jest" />
 
-import { evenZeroesMethod } from ".";
+import {
+  evenZeroesMethod,
+  contiguousOnesMethod,
+  surroundedOnesByZeroes,
+} from ".";
 import {
   contiguousOnesMethodFalse,
   contiguousOnesMethodTrue,
   evenZeroesMethodFalse,
   evenZeroesMethodTrue,
+  surroundedOnesByZeroesMethodFalse,
+  surroundedOnesByZeroesMethodTrue,
 } from "../dummyLib";
 
 describe("math utilities", () => {
@@ -15,7 +21,14 @@ describe("math utilities", () => {
   });
 
   test("contiguousOnes returns true if there are 20% of 1 in contiguous positions to another 1 in the sample", () => {
-    expect(evenZeroesMethod(contiguousOnesMethodTrue)).toBe(true);
-    expect(evenZeroesMethod(contiguousOnesMethodFalse)).toBe(false);
+    expect(contiguousOnesMethod(contiguousOnesMethodTrue)).toBe(true);
+    expect(contiguousOnesMethod(contiguousOnesMethodFalse)).toBe(false);
+  });
+
+  test("surroundedOnesByZeroes returns true if there are 10% of 1 in the sample that are surrounded by 0s", () => {
+    expect(surroundedOnesByZeroes(surroundedOnesByZeroesMethodTrue)).toBe(true);
+    expect(surroundedOnesByZeroes(surroundedOnesByZeroesMethodFalse)).toBe(
+      false,
+    );
   });
 });
