@@ -1,28 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { dummyGetAllCellMethods } from "../../../services/cellMethods";
 
+import Stack from "@mui/material/Stack";
+import { SelectComp } from "../../ui/Select";
+
 export const WrapperCheckSamples = () => {
   const {
     data: availableSamples,
-    isLoading,
-    isError,
-    error,
+    isLoading: availableSamplesLoading,
+    isError: availableSamplesError,
+    error: availableSamplesErrorMessage,
   } = useQuery({
     queryKey: ["availableSamples"],
     queryFn: dummyGetAllCellMethods,
   });
 
-  if (isLoading) return <div>Cargando muestras disponibles...</div>;
-  if (isError) return <div>Error: {(error as Error).message}</div>;
+  if (availableSamplesLoading)
+    return <div>Cargando muestras disponibles...</div>;
+  if (availableSamplesError)
+    return <div>Error: {(availableSamplesErrorMessage as Error).message}</div>;
 
   return (
-    <div>
-      <h2>Muestras disponibles</h2>
-      <ul>
-        {availableSamples?.map((sample) => (
-          <li key={sample}>{sample}</li>
-        ))}
-      </ul>
-    </div>
+    <section id="wrapper-check-samples">
+      <Stack>
+        <h2>Muestras disponibles</h2>
+        <SelectComp optionsToDisplay={availableSamples} />
+      </Stack>
+    </section>
   );
 };
