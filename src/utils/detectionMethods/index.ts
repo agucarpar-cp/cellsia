@@ -7,6 +7,8 @@ function validateSample(sample: number[], minLength: number): boolean {
 }
 
 export function evenZeroesMethod(sample: number[]): boolean {
+  console.log("evenZeroesMethod", sample);
+  console.log("validateSample", validateSample(sample, 1));
   if (!validateSample(sample, 1)) return false;
   const sampleLength = sample.length;
 

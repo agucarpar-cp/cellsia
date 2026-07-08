@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
+import { methodsNamesList } from "../../../utils/libs/lib";
 
 type TypeFormValues = {
   selectedSample: string;
@@ -69,6 +70,16 @@ export const WrapperCheckSamples = () => {
 
   const handleOnSubmit = (formValues: TypeFormValues) => {
     console.log(formValues);
+    console.log("dataSample", dataSample);
+
+    const methodResults = formValues.selectedMethods.map((selectedMethod) => {
+      return methodsNamesList
+        .find((method) => method.value === selectedMethod)
+        ?.method(dataSample.cells || []);
+    });
+
+    console.log("methodResults", methodResults);
+    return methodResults;
   };
 
   if (isAllSamplesLoading || availableSamplesLoading)
