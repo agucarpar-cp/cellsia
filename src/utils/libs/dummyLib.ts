@@ -1,8 +1,9 @@
-export const evenZeroesMethodTrue = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-export const evenZeroesMethodFalse = [0, 1, 2, 3, 4, 5, 6];
+// We are cheating here. This file is a dummy file where we define a list of available methods. But, actually, the method list must be fetched from the backend, in a SSR component, storage in Context/redux/Zustand/pinia/.. and import there where it would be used. This is a temporary solution to avoid having to implement the full backend integration for now. We will use this dummyAvailableMethodsList to simulate the backend response.
 
-export const contiguousOnesMethodTrue = [1, 1, 0, 1, 1, 1, 0, 0, 1];
-export const contiguousOnesMethodFalse = [1, 0, 1, 0, 1, 0, 1, 0, 1];
-
-export const surroundedOnesByZeroesMethodTrue = [0, 1, 0, 1, 0, 1, 0, 1, 0];
-export const surroundedOnesByZeroesMethodFalse = [1, 0, 1, 0, 1, 0, 1, 0, 1];
+export const dummyAvailableMethodsList = [
+  "sample-a",
+  "sample-b",
+  "sample-c",
+  "sample-d",
+  "sample-e",
+];

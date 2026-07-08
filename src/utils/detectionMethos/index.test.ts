@@ -12,7 +12,7 @@ import {
   evenZeroesMethodTrue,
   surroundedOnesByZeroesMethodFalse,
   surroundedOnesByZeroesMethodTrue,
-} from "../libs/dummyLib";
+} from "../libs/cellMethodsDataTest";
 
 describe("methods to check samples", () => {
   test("evenZeroesMethod returns true for arrays with more than 30% even-indexed zeroes", () => {
