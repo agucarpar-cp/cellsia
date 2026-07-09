@@ -45,7 +45,7 @@ export const WrapperCheckSamples = () => {
     control,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting, isSubmitted, isDirty },
   } = formMethods;
 
   const selectedSample = watch("selectedSample");
@@ -122,7 +122,10 @@ export const WrapperCheckSamples = () => {
                   <WrapperDisplayResults resultsMethods={useMethodsResults} />
                 </Stack>
 
-                <Button type="submit" disabled={!isValid}>
+                <Button
+                  type="submit"
+                  disabled={!isValid || isSubmitting || (isSubmitted && !isDirty)}
+                >
                   Submit
                 </Button>
               </>

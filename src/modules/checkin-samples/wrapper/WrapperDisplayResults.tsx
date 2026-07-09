@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { methodsNamesList } from "../../../utils/libs/lib";
 import { Stack, Typography } from "@mui/material";
 import type { TypeArrayMethodResult } from "../../../types/typeMethosResults";
@@ -11,20 +11,15 @@ interface IPropsWrapperDisplayResults {
 export const WrapperDisplayResults = ({
   resultsMethods,
 }: IPropsWrapperDisplayResults) => {
-  const [finalResult, setFinalResult] = useState<boolean | null>(null);
-
-  const handleCalculateFinalResult = () => {
-    const results = calculateFinalResult(resultsMethods);
-    setFinalResult(results);
-  };
-
-  useEffect(() => {
-    handleCalculateFinalResult();
+  const finalResult = useMemo(() => {
+    if (resultsMethods.length === 0) return null;
+    return calculateFinalResult(resultsMethods);
   }, [resultsMethods]);
 
   if (!resultsMethods || resultsMethods.length === 0) {
     return null;
   }
+
   return (
     <Stack spacing={2}>
       <h3>Resultados de los métodos seleccionados:</h3>
