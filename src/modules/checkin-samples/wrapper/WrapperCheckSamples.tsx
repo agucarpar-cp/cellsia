@@ -13,7 +13,7 @@ import { WrapperDisplayResults } from "./WrapperDisplayResults";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { collectedMethodsResults } from "../../../utils/detectionMethods/dectectionMethods";
 import type { TypeFormValues } from "../../../types/typeMethosResults";
 import { Loading } from "../../ui/Loading";
@@ -105,34 +105,40 @@ export const WrapperCheckSamples = () => {
 
   return (
     <section id="wrapper-check-samples">
-      <Stack spacing={3}>
-        <h2>Muestras disponibles</h2>
-        <form onSubmit={handleSubmit(handleOnSubmit)}>
-          <Stack spacing={3}>
-            <SelectSample
-              control={control}
-              optionsToDisplay={availableSamples}
-            />
-            {dataSample && (
-              <>
-                <Stack spacing={3}>
-                  <CheckinSampleDisplayData dataSample={dataSample.cells} />
-                  <SelectMethods control={control} />
+      <Container
+        maxWidth="md"
+        sx={{ paddingTop: "2rem", paddingBottom: "2rem" }}
+      >
+        <Stack spacing={3}>
+          <h2>Available Samples</h2>
+          <form onSubmit={handleSubmit(handleOnSubmit)}>
+            <Stack spacing={3}>
+              <SelectSample
+                control={control}
+                optionsToDisplay={availableSamples}
+              />
+              {dataSample && (
+                <>
+                  <Stack spacing={3}>
+                    <CheckinSampleDisplayData dataSample={dataSample.cells} />
+                    <SelectMethods control={control} />
+                    <WrapperDisplayResults resultsMethods={useMethodsResults} />
+                  </Stack>
 
-                  <WrapperDisplayResults resultsMethods={useMethodsResults} />
-                </Stack>
-
-                <Button
-                  type="submit"
-                  disabled={!isValid || isSubmitting || (isSubmitted && !isDirty)}
-                >
-                  Submit
-                </Button>
-              </>
-            )}
-          </Stack>
-        </form>
-      </Stack>
+                  <Button
+                    type="submit"
+                    disabled={
+                      !isValid || isSubmitting || (isSubmitted && !isDirty)
+                    }
+                  >
+                    Submit
+                  </Button>
+                </>
+              )}
+            </Stack>
+          </form>
+        </Stack>
+      </Container>
     </section>
   );
 };

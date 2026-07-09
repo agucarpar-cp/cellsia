@@ -22,7 +22,7 @@ export const WrapperDisplayResults = ({
 
   return (
     <Stack spacing={2}>
-      <h3>Resultados de los métodos seleccionados:</h3>
+      <h3>Results of the selected methods:</h3>
 
       <ol>
         {resultsMethods.map(({ method, value }, index) => (
