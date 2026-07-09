@@ -101,19 +101,24 @@ export const WrapperCheckSamples = () => {
       <Stack spacing={3}>
         <h2>Muestras disponibles</h2>
         <form onSubmit={handleSubmit(handleOnSubmit)}>
-          <SelectSample control={control} optionsToDisplay={availableSamples} />
-          {dataSample && (
-            <Stack spacing={3}>
-              <CheckinSampleDisplayData dataSample={dataSample.cells} />
-              <SelectMethods control={control} />
+          <Stack spacing={3}>
+            <SelectSample
+              control={control}
+              optionsToDisplay={availableSamples}
+            />
+            {dataSample && (
               <Stack spacing={3}>
-                <h3>Resultados de los métodos seleccionados:</h3>
-                <WrapperDisplayResults resultsMethods={useMethodsResults} />
+                <CheckinSampleDisplayData dataSample={dataSample.cells} />
+                <SelectMethods control={control} />
+                <Stack spacing={3}>
+                  <h3>Resultados de los métodos seleccionados:</h3>
+                  <WrapperDisplayResults resultsMethods={useMethodsResults} />
+                </Stack>
               </Stack>
-            </Stack>
-          )}
+            )}
 
-          <Button type="submit">Submit</Button>
+            <Button type="submit">Submit</Button>
+          </Stack>
         </form>
       </Stack>
     </section>
