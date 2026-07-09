@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   dummyGetAllCellSamples,
   getOneCellSample,
@@ -28,6 +28,7 @@ export const WrapperCheckSamples = () => {
     selectedSample: yup.string().required("Sample is required"),
     selectedMethods: yup
       .array()
+      .min(1)
       .of(yup.string().required())
       .required("Methods are required"),
   });
@@ -44,7 +45,7 @@ export const WrapperCheckSamples = () => {
     control,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = formMethods;
 
   const selectedSample = watch("selectedSample");
@@ -78,12 +79,17 @@ export const WrapperCheckSamples = () => {
   });
 
   const handleOnSubmit = (formValues: TypeFormValues) => {
+    if (!dataSample?.cells) return;
     const results = collectedMethodsResults(
       formValues.selectedMethods,
       dataSample.cells,
     );
     setUseMethodsResults(results);
   };
+
+  useEffect(() => {
+    setUseMethodsResults([]);
+  }, [selectedSample]);
 
   if (isAllSamplesLoading || availableSamplesLoading) return <Loading />;
 
@@ -108,17 +114,19 @@ export const WrapperCheckSamples = () => {
               optionsToDisplay={availableSamples}
             />
             {dataSample && (
-              <Stack spacing={3}>
-                <CheckinSampleDisplayData dataSample={dataSample.cells} />
-                <SelectMethods control={control} />
+              <>
                 <Stack spacing={3}>
-                  <h3>Resultados de los métodos seleccionados:</h3>
+                  <CheckinSampleDisplayData dataSample={dataSample.cells} />
+                  <SelectMethods control={control} />
+
                   <WrapperDisplayResults resultsMethods={useMethodsResults} />
                 </Stack>
-              </Stack>
-            )}
 
-            <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={!isValid}>
+                  Submit
+                </Button>
+              </>
+            )}
           </Stack>
         </form>
       </Stack>

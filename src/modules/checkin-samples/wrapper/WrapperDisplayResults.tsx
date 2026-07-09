@@ -21,8 +21,14 @@ export const WrapperDisplayResults = ({
   useEffect(() => {
     handleCalculateFinalResult();
   }, [resultsMethods]);
+
+  if (!resultsMethods || resultsMethods.length === 0) {
+    return null;
+  }
   return (
-    <Stack>
+    <Stack spacing={2}>
+      <h3>Resultados de los métodos seleccionados:</h3>
+
       <ol>
         {resultsMethods.map(({ method, value }, index) => (
           <li key={method + index}>
