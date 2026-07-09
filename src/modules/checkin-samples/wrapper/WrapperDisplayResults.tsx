@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { methodsNamesList } from "../../../utils/libs/lib";
 import { Stack, Typography } from "@mui/material";
+import type { TypeArrayMethodResult } from "../../../types/typeMethosResults";
 
 interface IPropsWrapperDisplayResults {
-  resultsMethods: { value: boolean; method: string }[];
+  resultsMethods: TypeArrayMethodResult;
 }
 
 export const WrapperDisplayResults = ({
@@ -11,9 +12,7 @@ export const WrapperDisplayResults = ({
 }: IPropsWrapperDisplayResults) => {
   const [finalResult, setFinalResult] = useState<boolean | null>(null);
 
-  function calculateFinalResult(
-    methodsResults: { value: boolean; method: string }[],
-  ) {
+  function calculateFinalResult(methodsResults: TypeArrayMethodResult) {
     const resultsLength = methodsResults.length;
     const countTrueResults = methodsResults.filter(
       (result) => result.value,
@@ -22,7 +21,6 @@ export const WrapperDisplayResults = ({
     setFinalResult(finalResult);
   }
 
-  // Calculate final result whenever resultsMethods change
   useEffect(() => {
     calculateFinalResult(resultsMethods);
   }, [resultsMethods]);

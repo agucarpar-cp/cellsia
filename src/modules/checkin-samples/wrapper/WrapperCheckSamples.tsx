@@ -14,13 +14,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { methodsNamesList } from "../../../utils/libs/lib";
 import { collectedMethodsResults } from "../../../utils/detectionMethods/dectectionMethods";
-
-type TypeFormValues = {
-  selectedSample: string;
-  selectedMethods: string[];
-};
+import type { TypeFormValues } from "../../../types/typeMethosResults";
 
 export const WrapperCheckSamples = () => {
   const [useMethodsResults, setUseMethodsResults] = useState<
