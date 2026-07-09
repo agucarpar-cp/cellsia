@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { collectedMethodsResults } from "../../../utils/detectionMethods/dectectionMethods";
 import type { TypeFormValues } from "../../../types/typeMethosResults";
+import { Loading } from "../../ui/Loading";
+import { ErrorMessage } from "../../ui/ErrorMessage";
 
 export const WrapperCheckSamples = () => {
   const [useMethodsResults, setUseMethodsResults] = useState<
@@ -61,6 +63,7 @@ export const WrapperCheckSamples = () => {
     retry: false,
   });
 
+  // This API call would be triggered by a SSR component
   const {
     data: availableSamples,
     isLoading: isAllSamplesLoading,
@@ -82,18 +85,16 @@ export const WrapperCheckSamples = () => {
     setUseMethodsResults(results);
   };
 
-  if (isAllSamplesLoading || availableSamplesLoading)
-    return <div>Loading...</div>;
+  if (isAllSamplesLoading || availableSamplesLoading) return <Loading />;
 
   if (availableSamplesError || allSamplesError)
     return (
-      <div>
-        Error:{" "}
-        {
+      <ErrorMessage
+        errorMessage={
           (availableSamplesErrorMessage || (allSamplesErrorMessage as Error))
             .message
         }
-      </div>
+      />
     );
 
   return (
