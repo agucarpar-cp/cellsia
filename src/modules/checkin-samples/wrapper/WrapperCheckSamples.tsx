@@ -50,6 +50,11 @@ export const WrapperCheckSamples = () => {
 
   const selectedSample = watch("selectedSample");
 
+  // IMPORTANT NOTE
+
+  // Currently, the API call to get the selected sample is set when the user choose an option on the SELECT. That is WRONG, the API call must be placed when the user SUBMIT the form and not before. I realized of that wrong when I was going through what I did in my mind.
+
+  // I do not want to apply the changes to keep pure what I submited, but I would like to add this note so who is checking the app knows that I am aware of this mistake
   const {
     data: dataSample,
     isLoading: availableSamplesLoading,
